@@ -1,4 +1,6 @@
 # AI Stream Overlay
+![alt text](image-1.png)
+
 
 A high-tech, responsive, and data-driven OBS overlay built with React, Vite, TailwindCSS, and a dedicated Node.js backend. This overlay acts as an interactive dashboard for tech streams and includes an integrated, local **AI Co-host Chat Companion** powered by `node-llama-cpp`.
 
