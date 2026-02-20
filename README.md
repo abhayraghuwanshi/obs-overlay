@@ -1,4 +1,7 @@
 # AI Stream Overlay
+
+Streamed while building it:  https://www.youtube.com/watch?v=EYx6zFFJDyE 
+
 ![alt text](image-1.png)
 
 
