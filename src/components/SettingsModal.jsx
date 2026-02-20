@@ -128,6 +128,22 @@ const ToggleItem = ({ label, description, active, onClick }) => (
 );
 
 const LayoutTab = ({ showFaceCam, setShowFaceCam, showHandCam, setShowHandCam, showRoomCam, setShowRoomCam, socialGithub, setSocialGithub, socialTwitter, setSocialTwitter, socialLinkedin, setSocialLinkedin, useGPU, setUseGPU }) => {
+    const [localGithub, setLocalGithub] = useState(socialGithub || '');
+    const [localTwitter, setLocalTwitter] = useState(socialTwitter || '');
+    const [localLinkedin, setLocalLinkedin] = useState(socialLinkedin || '');
+
+    useEffect(() => {
+        setLocalGithub(socialGithub || '');
+        setLocalTwitter(socialTwitter || '');
+        setLocalLinkedin(socialLinkedin || '');
+    }, [socialGithub, socialTwitter, socialLinkedin]);
+
+    const handleSaveSocials = () => {
+        if (localGithub !== socialGithub) setSocialGithub(localGithub);
+        if (localTwitter !== socialTwitter) setSocialTwitter(localTwitter);
+        if (localLinkedin !== socialLinkedin) setSocialLinkedin(localLinkedin);
+    };
+
     return (
         <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
@@ -167,8 +183,8 @@ const LayoutTab = ({ showFaceCam, setShowFaceCam, showHandCam, setShowHandCam, s
                             type="text"
                             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50"
                             placeholder="/raghu-dev"
-                            value={socialGithub || ''}
-                            onChange={(e) => setSocialGithub(e.target.value)}
+                            value={localGithub}
+                            onChange={(e) => setLocalGithub(e.target.value)}
                         />
                     </div>
 
@@ -178,8 +194,8 @@ const LayoutTab = ({ showFaceCam, setShowFaceCam, showHandCam, setShowHandCam, s
                             type="text"
                             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50"
                             placeholder="@raghu_codes"
-                            value={socialTwitter || ''}
-                            onChange={(e) => setSocialTwitter(e.target.value)}
+                            value={localTwitter}
+                            onChange={(e) => setLocalTwitter(e.target.value)}
                         />
                     </div>
 
@@ -189,10 +205,17 @@ const LayoutTab = ({ showFaceCam, setShowFaceCam, showHandCam, setShowHandCam, s
                             type="text"
                             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50"
                             placeholder="/in/raghu"
-                            value={socialLinkedin || ''}
-                            onChange={(e) => setSocialLinkedin(e.target.value)}
+                            value={localLinkedin}
+                            onChange={(e) => setLocalLinkedin(e.target.value)}
                         />
                     </div>
+
+                    <button
+                        onClick={handleSaveSocials}
+                        className="mt-2 w-full py-2.5 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-xl text-sm transition-colors shadow-lg shadow-blue-500/20"
+                    >
+                        Save Socials
+                    </button>
                 </div>
             </div>
 

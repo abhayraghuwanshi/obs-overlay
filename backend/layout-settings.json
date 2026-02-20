@@ -1,9 +1,9 @@
 {
-  "showFaceCam": true,
+  "showFaceCam": false,
   "showHandCam": false,
   "showRoomCam": false,
   "socialGithub": "/raghu-dev",
   "socialTwitter": "@raghu_codes",
-  "socialLinkedin": "/in/raghu",
+  "socialLinkedin": "/in/abhayraghuwanshi-112234",
   "useGPU": true
 }
