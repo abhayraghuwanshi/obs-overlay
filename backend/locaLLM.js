@@ -11,7 +11,7 @@
  * - Function calling (structured JSON output)
  */
 
-import { appendFileSync, createWriteStream, existsSync, mkdirSync, statSync, unlinkSync } from 'fs';
+import { appendFileSync, createWriteStream, existsSync, mkdirSync, readFileSync, statSync, unlinkSync } from 'fs';
 import http from 'http';
 import https from 'https';
 import { getLlama, LlamaChatSession } from 'node-llama-cpp';
@@ -366,10 +366,22 @@ export async function loadModel(modelName = CONFIG.DEFAULT_MODEL) {
 
         console.log('[LocalLLM] Loading model:', modelPath);
 
-        // Load the model with GPU acceleration enabled!
+        let userRequiresGPU = true;
+        try {
+            const layoutFile = join(process.cwd(), 'backend', 'layout-settings.json');
+            const fileData = readFileSync(layoutFile, 'utf8');
+            const parsed = JSON.parse(fileData);
+            if (typeof parsed.useGPU === 'boolean') {
+                userRequiresGPU = parsed.useGPU;
+            }
+        } catch (e) {
+            console.log('[LocalLLM] Failed to read user GPU config, defaulting to GPU Enabled');
+        }
+
+        // Load the model dynamically checking if GPU is enabled
         model = await llama.loadModel({
             modelPath,
-            gpuLayers: "max" // 'max' offloads the entire model to the GPU for maximum speed
+            gpuLayers: userRequiresGPU ? "max" : 0 // 'max' offloads to the GPU, 0 offloads to CPU
         });
 
         loadProgress = 80;

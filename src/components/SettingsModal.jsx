@@ -24,7 +24,11 @@ const SettingsModal = ({
     onClose,
     showFaceCam, setShowFaceCam,
     showHandCam, setShowHandCam,
-    showRoomCam, setShowRoomCam
+    showRoomCam, setShowRoomCam,
+    socialGithub, setSocialGithub,
+    socialTwitter, setSocialTwitter,
+    socialLinkedin, setSocialLinkedin,
+    useGPU, setUseGPU
 }) => {
     const [activeTab, setActiveTab] = useState('layout');
 
@@ -82,6 +86,10 @@ const SettingsModal = ({
                                 showFaceCam={showFaceCam} setShowFaceCam={setShowFaceCam}
                                 showHandCam={showHandCam} setShowHandCam={setShowHandCam}
                                 showRoomCam={showRoomCam} setShowRoomCam={setShowRoomCam}
+                                socialGithub={socialGithub} setSocialGithub={setSocialGithub}
+                                socialTwitter={socialTwitter} setSocialTwitter={setSocialTwitter}
+                                socialLinkedin={socialLinkedin} setSocialLinkedin={setSocialLinkedin}
+                                useGPU={useGPU} setUseGPU={setUseGPU}
                             />
                         )}
                         {activeTab === 'ai' && (
@@ -98,8 +106,8 @@ const TabButton = ({ icon: Icon, label, active, onClick }) => (
     <button
         onClick={onClick}
         className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-sm font-medium ${active
-                ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                : 'text-white/60 hover:bg-white/5 hover:text-white border border-transparent'
+            ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+            : 'text-white/60 hover:bg-white/5 hover:text-white border border-transparent'
             }`}
     >
         <Icon size={18} />
@@ -119,7 +127,7 @@ const ToggleItem = ({ label, description, active, onClick }) => (
     </div>
 );
 
-const LayoutTab = ({ showFaceCam, setShowFaceCam, showHandCam, setShowHandCam, showRoomCam, setShowRoomCam }) => {
+const LayoutTab = ({ showFaceCam, setShowFaceCam, showHandCam, setShowHandCam, showRoomCam, setShowRoomCam, socialGithub, setSocialGithub, socialTwitter, setSocialTwitter, socialLinkedin, setSocialLinkedin, useGPU, setUseGPU }) => {
     return (
         <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
@@ -147,7 +155,61 @@ const LayoutTab = ({ showFaceCam, setShowFaceCam, showHandCam, setShowHandCam, s
                     />
                 </div>
             </div>
-        </div>
+
+            <div className="pt-2">
+                <h3 className="text-lg font-semibold text-white mb-1">Social URLs</h3>
+                <p className="text-sm text-white/50 mb-4">Set the text for the social feed ticker.</p>
+
+                <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-1">
+                        <label className="text-xs text-white/60 font-medium ml-1">Github URL / Handle</label>
+                        <input
+                            type="text"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50"
+                            placeholder="/raghu-dev"
+                            value={socialGithub || ''}
+                            onChange={(e) => setSocialGithub(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                        <label className="text-xs text-white/60 font-medium ml-1">Twitter Handle</label>
+                        <input
+                            type="text"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50"
+                            placeholder="@raghu_codes"
+                            value={socialTwitter || ''}
+                            onChange={(e) => setSocialTwitter(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                        <label className="text-xs text-white/60 font-medium ml-1">LinkedIn URL</label>
+                        <input
+                            type="text"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50"
+                            placeholder="/in/raghu"
+                            value={socialLinkedin || ''}
+                            onChange={(e) => setSocialLinkedin(e.target.value)}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div className="pt-2">
+                <h3 className="text-lg font-semibold text-white mb-1">Hardware Settings</h3>
+                <p className="text-sm text-white/50 mb-4">Toggle CUDA/Metal hardware GPU acceleration. (Requires server restart)</p>
+
+                <div className="flex flex-col gap-3">
+                    <ToggleItem
+                        label="Enable GPU Acceleration"
+                        description="Routes AI calculations to your GPU for massive generation speeds."
+                        active={useGPU}
+                        onClick={() => setUseGPU(!useGPU)}
+                    />
+                </div>
+            </div>
+        </div >
     );
 };
 
@@ -323,8 +385,8 @@ function LocalAITab() {
             <div className="p-5 bg-white/[0.03] rounded-2xl border border-white/5 shadow-inner">
                 <div className="flex items-center gap-4 mb-4 text-sm">
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg ${status?.modelLoaded
-                            ? 'bg-gradient-to-br from-green-500 to-green-700'
-                            : 'bg-gradient-to-br from-blue-500 to-purple-600'
+                        ? 'bg-gradient-to-br from-green-500 to-green-700'
+                        : 'bg-gradient-to-br from-blue-500 to-purple-600'
                         }`}>
                         <Rocket />
                     </div>
@@ -436,10 +498,10 @@ function ModelCard({ filename, model, isLoaded, isLoading, downloadProgress, onD
             }`}>
             <div className="flex items-start gap-4">
                 <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 text-white shadow-md ${isLoaded
-                        ? 'bg-gradient-to-br from-green-400 to-green-600'
-                        : model.downloaded
-                            ? 'bg-gradient-to-br from-indigo-500 to-purple-600'
-                            : 'bg-white/10'
+                    ? 'bg-gradient-to-br from-green-400 to-green-600'
+                    : model.downloaded
+                        ? 'bg-gradient-to-br from-indigo-500 to-purple-600'
+                        : 'bg-white/10'
                     }`}>
                     {isLoaded ? <Rocket size={20} /> : <Cpu size={20} />}
                 </div>

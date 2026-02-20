@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import { Github, Linkedin, MonitorPlay, Twitter } from 'lucide-react';
 
-const SocialFeed = () => {
+const SocialFeed = ({ github, twitter, linkedin }) => {
     // Compact list
     const socialLinks = [
-        { icon: <Github size={18} />, label: "/raghu-dev", color: "text-white" },
-        { icon: <Twitter size={18} />, label: "@raghu_codes", color: "text-blue-400" },
-        { icon: <Linkedin size={18} />, label: "/in/raghu", color: "text-blue-600" },
+        { icon: <Github size={18} />, label: github, color: "text-white" },
+        { icon: <Twitter size={18} />, label: twitter, color: "text-blue-400" },
+        { icon: <Linkedin size={18} />, label: linkedin, color: "text-blue-600" },
     ];
 
     return (

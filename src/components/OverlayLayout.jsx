@@ -11,7 +11,11 @@ const OverlayLayout = () => {
     const [layoutSettings, setLayoutSettings] = useState({
         showFaceCam: true,
         showHandCam: true,
-        showRoomCam: true
+        showRoomCam: true,
+        socialGithub: "/abhayraghuwanshi",
+        socialTwitter: "@ab_nhi_hai",
+        socialLinkedin: "/in/abhayraghuwanshi",
+        useGPU: true
     });
     const [showSettings, setShowSettings] = useState(false);
 
@@ -64,7 +68,7 @@ const OverlayLayout = () => {
         }).catch(console.error);
     };
 
-    const { showFaceCam, showHandCam, showRoomCam } = layoutSettings;
+    const { showFaceCam, showHandCam, showRoomCam, socialGithub, socialTwitter, socialLinkedin, useGPU } = layoutSettings;
 
     return (
         // MAIN CONTAINER: w-screen h-screen ensures it fills ANY resolution
@@ -98,6 +102,10 @@ const OverlayLayout = () => {
                             showFaceCam={showFaceCam} setShowFaceCam={(v) => updateLayout({ showFaceCam: v })}
                             showHandCam={showHandCam} setShowHandCam={(v) => updateLayout({ showHandCam: v })}
                             showRoomCam={showRoomCam} setShowRoomCam={(v) => updateLayout({ showRoomCam: v })}
+                            socialGithub={socialGithub} setSocialGithub={(v) => updateLayout({ socialGithub: v })}
+                            socialTwitter={socialTwitter} setSocialTwitter={(v) => updateLayout({ socialTwitter: v })}
+                            socialLinkedin={socialLinkedin} setSocialLinkedin={(v) => updateLayout({ socialLinkedin: v })}
+                            useGPU={useGPU} setUseGPU={(v) => updateLayout({ useGPU: v })}
                         />
                     )}
                 </AnimatePresence>
@@ -154,7 +162,7 @@ const OverlayLayout = () => {
 
                 {/* 2. Content Area (Social + AI) */}
                 <div className="flex-1 min-h-0 p-3 flex flex-col gap-3">
-                    <SocialFeed />
+                    <SocialFeed github={socialGithub} twitter={socialTwitter} linkedin={socialLinkedin} />
 
                     {/* The new AI Avatar Box */}
                     <div className="flex-1 min-h-0">
