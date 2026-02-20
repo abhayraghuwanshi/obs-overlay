@@ -11,7 +11,7 @@
  * - Function calling (structured JSON output)
  */
 
-import { createWriteStream, existsSync, mkdirSync, statSync, unlinkSync } from 'fs';
+import { appendFileSync, createWriteStream, existsSync, mkdirSync, statSync, unlinkSync } from 'fs';
 import http from 'http';
 import https from 'https';
 import { getLlama, LlamaChatSession } from 'node-llama-cpp';
@@ -25,8 +25,9 @@ import { join } from 'path';
 const APP_DATA_DIR = join(homedir(), '.cooldesk');
 
 const CONFIG = {
-    // Model storage directory
+    // Storage directories
     MODELS_DIR: join(APP_DATA_DIR, 'models'),
+    LOGS_DIR: join(APP_DATA_DIR, 'logs'),
 
     // Default model (good balance of size/quality)
     DEFAULT_MODEL: 'llama-3.2-1b-instruct.Q4_K_M.gguf',
@@ -453,7 +454,34 @@ export async function chat(prompt, options = {}) {
         topP: options.topP || CONFIG.TOP_P
     });
 
+    logInteraction(prompt, response);
+
     return response;
+}
+
+/**
+ * Log LLM interaction to a daily file
+ */
+function logInteraction(prompt, response) {
+    try {
+        if (!existsSync(CONFIG.LOGS_DIR)) {
+            mkdirSync(CONFIG.LOGS_DIR, { recursive: true });
+        }
+
+        const date = new Date().toISOString().split('T')[0];
+        const logPath = join(CONFIG.LOGS_DIR, `chat_${date}.log`);
+        const timestamp = new Date().toISOString();
+
+        const logEntry = `\n==========================================\n` +
+            `[${timestamp}] MODEL: ${currentModelName}\n` +
+            `==========================================\n` +
+            `USER REQUEST:\n${prompt}\n\n` +
+            `AI RESPONSE:\n${response}\n`;
+
+        appendFileSync(logPath, logEntry, 'utf8');
+    } catch (e) {
+        console.error('[LocalLLM] Failed to write chat log:', e);
+    }
 }
 
 /**
