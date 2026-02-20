@@ -17,6 +17,7 @@ A high-tech, responsive, and data-driven OBS overlay built with React, Vite, Tai
 - **Settings Modal Panel**: A slick, glassmorphic UI overlay containing:
   - **Layout & Cameras**: Toggles for turning camera placeholders on and off.
   - **Local AI Config**: Direct model management. Easily download, load, and switch between models (e.g., Llama 3.2 1B, Qwen2.5) without touching the terminal.
+- **Browser Extension Integration**: A tandem extension that lets you highlight code or text in your browser, beaming it instantly via WebSocket to the Node.js backend. The Local AI will read it and provide real-time commentary directly onto your stream overlay!
 
 ## Architecture
 
@@ -31,7 +32,10 @@ The project is split into two main sections:
    - Runs `server.js` and manages `locaLLM.js`.
    - Maintains a concurrent HTTP Server (for downloading/managing models) and a WebSocket Server (for pushing real-time LLM chat inference directly to the overlay).
    - Automatically detects downloaded `.gguf` local AI models and auto-loads them into RAM/VRAM on boot.
-
+3. **Browser Extension**: 
+   - Interacts seamlessly with the backend.
+   - Captures user highlighting or commands and pushes the payload over websockets to the `server.js`. The LLM engine reads this payload and streams a witty response back to the OBS overlay!
+![alt text](image-2.png)
 ## Getting Started
 
 ### Prerequisites
