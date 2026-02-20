@@ -365,11 +365,10 @@ export async function loadModel(modelName = CONFIG.DEFAULT_MODEL) {
 
         console.log('[LocalLLM] Loading model:', modelPath);
 
-        // Load the model - start with CPU only to avoid GPU memory issues
-        // GPU acceleration can be enabled later if needed
+        // Load the model with GPU acceleration enabled!
         model = await llama.loadModel({
             modelPath,
-            gpuLayers: 0 // CPU only - more compatible, avoids GPU memory errors
+            gpuLayers: "max" // 'max' offloads the entire model to the GPU for maximum speed
         });
 
         loadProgress = 80;
