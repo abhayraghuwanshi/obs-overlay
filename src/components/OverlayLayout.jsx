@@ -940,7 +940,7 @@ const OverlayLayout = () => {
                                 <Layers size={13} />Layers
                             </button>
                         )}
-                        <a href="/?home" title="Home" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+                        <a href="/" title="Home" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
                             <div style={{
                                 width: 18, height: 18, borderRadius: 4, flexShrink: 0,
                                 background: 'rgba(99,102,241,0.25)', border: '1px solid rgba(99,102,241,0.45)',

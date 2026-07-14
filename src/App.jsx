@@ -3,9 +3,12 @@ import LandingPage from './components/LandingPage';
 import { OBSProvider } from './context/OBSContext';
 
 function App() {
-  // The editor/overlay stays at `/` (and every ?room/?obs link is unaffected);
-  // the marketing home page lives at `/?home`.
-  if (new URLSearchParams(window.location.search).has('home')) {
+  // The marketing home page owns the bare `/` so search engines index it;
+  // any editor/OBS param (?room, ?obs, ?studio) opens the app instead, so
+  // every existing ?room/?obs link is unaffected. `/?home` still lands here
+  // too for old links.
+  const params = new URLSearchParams(window.location.search);
+  if (!params.has('room') && !params.has('obs') && !params.has('studio')) {
     return <LandingPage />;
   }
   return (

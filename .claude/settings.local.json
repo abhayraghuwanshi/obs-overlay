@@ -7,7 +7,10 @@
       "Bash(git commit -m 'Add countdown element + theme-token system *)",
       "PowerShell(npm run *)",
       "Bash(npx vite *)",
-      "Bash(npx eslint *)"
+      "Bash(npx eslint *)",
+      "Bash(grep -v \"react-refresh/only-export-components\\\\|set-state-in-effect\\\\|Fast refresh\\\\|Effects are intended\\\\|Update external\\\\|Subscribe for\\\\|Calling setState\\\\|body of an effect\\\\|external system\\\\|hurt performance\\\\|^\\\\s*$\\\\|^\\\\s*[0-9]*\\\\s*|\\\\s*\\\\^\")",
+      "Bash(curl -s http://localhost:3377/api/scores)",
+      "WebFetch(domain:streamoverlay.kazekit.com)"
     ]
   }
 }

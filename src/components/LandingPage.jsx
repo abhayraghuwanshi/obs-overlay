@@ -81,7 +81,7 @@ export default function LandingPage() {
     const [stats, setStats] = useState(null);
 
     useEffect(() => {
-        document.title = 'Overlay Studio — custom stream overlays in your browser';
+        document.title = 'Overlay Studio — free stream overlay editor for OBS';
         const prev = document.body.style.overflow;
         document.body.style.overflow = 'auto';
         let alive = true;
@@ -106,7 +106,7 @@ export default function LandingPage() {
             {/* top bar */}
             <div style={{ ...wrap, display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
                 <span style={{ fontFamily: DISPLAY, fontWeight: 700, fontSize: 16, letterSpacing: -0.2 }}>Overlay Studio</span>
-                <a href="/" style={{ fontFamily: DISPLAY, fontSize: 14, fontWeight: 500, color: C.ink, textDecoration: 'none', borderBottom: `1px solid ${C.accent}`, paddingBottom: 2 }}>Open the studio →</a>
+                <a href="/?studio" style={{ fontFamily: DISPLAY, fontSize: 14, fontWeight: 500, color: C.ink, textDecoration: 'none', borderBottom: `1px solid ${C.accent}`, paddingBottom: 2 }}>Open the studio →</a>
             </div>
 
             {/* hero — left aligned, type led */}
@@ -119,7 +119,7 @@ export default function LandingPage() {
                     Cameras, live scores, goals, pets, timers and themes — arranged on a real canvas and recorded in the browser. Nothing to install.
                 </p>
                 <div style={{ display: 'flex', gap: 22, alignItems: 'center', flexWrap: 'wrap', marginTop: 34 }}>
-                    <a href="/" style={btn}>Open the studio →</a>
+                    <a href="/?studio" style={btn}>Open the studio →</a>
                     <a href="#features" style={{ fontFamily: DISPLAY, fontSize: 15, fontWeight: 500, color: C.dim, textDecoration: 'none' }}>See what's inside ↓</a>
                 </div>
             </div>
@@ -174,12 +174,12 @@ export default function LandingPage() {
                     Build the overlay your stream actually deserves.
                 </h2>
                 <div style={{ marginTop: 26 }}>
-                    <a href="/" style={btn}>Open the studio →</a>
+                    <a href="/?studio" style={btn}>Open the studio →</a>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 14, marginTop: 44 }}>
                     <span style={{ fontFamily: BODY, fontSize: 12, color: C.faint }}>Overlay Studio — free, browser-based, runs as an OBS browser source.</span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-                        <a href="/" style={{ fontFamily: DISPLAY, fontSize: 13, fontWeight: 500, color: C.dim, textDecoration: 'none' }}>Studio</a>
+                        <a href="/?studio" style={{ fontFamily: DISPLAY, fontSize: 13, fontWeight: 500, color: C.dim, textDecoration: 'none' }}>Studio</a>
                         <a href="https://github.com/abhayraghuwanshi/cool-stream-overlay" target="_blank" rel="noreferrer"
                             style={{ fontFamily: DISPLAY, fontSize: 13, fontWeight: 500, color: C.dim, textDecoration: 'none', borderBottom: `1px solid ${C.line}`, paddingBottom: 2 }}>
                             GitHub ↗

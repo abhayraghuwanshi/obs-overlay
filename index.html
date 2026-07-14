@@ -2,15 +2,75 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>stream-overlay</title>
+    <meta name="theme-color" content="#0b0b0d" />
+
+    <title>Overlay Studio — free stream overlay editor for OBS</title>
+    <meta name="description" content="Free browser-based stream overlay maker. Drag and drop cameras, live World Cup scores, goals, timers, pets and themes onto a canvas, then add it to OBS with one link. Nothing to install." />
+    <link rel="canonical" href="https://streamoverlay.kazekit.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Overlay Studio" />
+    <meta property="og:title" content="Overlay Studio — free stream overlay editor for OBS" />
+    <meta property="og:description" content="Design your stream overlay in the browser, then drop one link into OBS. Cameras, live scores, goals, timers and themes — free, nothing to install." />
+    <meta property="og:url" content="https://streamoverlay.kazekit.com/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Overlay Studio — free stream overlay editor for OBS" />
+    <meta name="twitter:description" content="Design your stream overlay in the browser, then drop one link into OBS. Free, nothing to install." />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Overlay Studio",
+      "url": "https://streamoverlay.kazekit.com/",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any (web browser)",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Free browser-based stream overlay editor. Arrange cameras, live scores, goals, timers and widgets on a canvas and add the overlay to OBS as a browser source with one link."
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Static copy of the landing content so crawlers get real text without
+         running JS. React replaces it on mount; the script below blanks it
+         before first paint on editor/OBS URLs so nothing flashes in OBS. -->
+    <div id="root">
+      <div style="min-height:100vh;background:#0b0b0d;color:#f1efe9;font-family:'Inter',system-ui,sans-serif;padding:72px 28px;box-sizing:border-box">
+        <main style="max-width:940px;margin:0 auto">
+          <p style="font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(241,239,233,0.34)">Browser-native stream overlays</p>
+          <h1 style="font-family:'Space Grotesk','Inter',system-ui,sans-serif;font-weight:700;font-size:clamp(38px,7vw,76px);line-height:1.02;letter-spacing:-1.5px;margin:20px 0 0;max-width:760px">Design your stream overlay, then drop one link into OBS.</h1>
+          <p style="font-size:17px;color:rgba(241,239,233,0.56);max-width:540px;line-height:1.6;margin:26px 0 0">Overlay Studio is a free stream overlay editor that runs in your browser. Arrange cameras, live World Cup scores, follower goals, timers, pets and themes on a real 16:9 canvas — then add the overlay to OBS as a browser source with a single link. Nothing to install.</p>
+          <section style="margin-top:48px">
+            <h2 style="font-family:'Space Grotesk','Inter',system-ui,sans-serif;font-size:20px;letter-spacing:-0.3px">What's inside</h2>
+            <ul style="color:rgba(241,239,233,0.56);line-height:1.8;padding-left:20px;max-width:640px">
+              <li><strong style="color:#f1efe9">Drag-and-drop editor</strong> — place cameras, text and widgets on a live 16:9 canvas. No code.</li>
+              <li><strong style="color:#f1efe9">OBS browser source</strong> — one link drops the overlay straight into OBS, and edits sync live.</li>
+              <li><strong style="color:#f1efe9">Live World Cup scoreboard</strong> — pick a fixture and the score keeps itself up to date on stream.</li>
+              <li><strong style="color:#f1efe9">Pets &amp; mood ring</strong> — little mascots that roam the canvas and shift with the mood of the room.</li>
+              <li><strong style="color:#f1efe9">Goals, timers &amp; widgets</strong> — follower and sub goals, countdowns, a pomodoro, tickers, sticky notes, a spin wheel.</li>
+              <li><strong style="color:#f1efe9">Themes &amp; recording</strong> — re-skin the whole overlay in a click, and record the stream right in the browser.</li>
+            </ul>
+          </section>
+          <p style="margin-top:40px"><a href="/?studio" style="color:#ff6a3d">Open the studio</a> · <a href="https://github.com/abhayraghuwanshi/cool-stream-overlay" style="color:rgba(241,239,233,0.56)">GitHub</a></p>
+        </main>
+      </div>
+    </div>
+    <script>
+      // Editor/OBS URLs must start blank (OBS renders transparent frames);
+      // only the bare landing page keeps the static markup until React mounts.
+      (function () {
+        var q = new URLSearchParams(location.search);
+        if (q.has('room') || q.has('obs') || q.has('studio')) {
+          document.getElementById('root').innerHTML = '';
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
