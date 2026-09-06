@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Check, ChevronUp, Circle, Film, GripHorizontal, Layers, LayoutGrid, Pencil, Play, RotateCcw, Save, X } from 'lucide-react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { getRoom, isDefaultRoom, layoutUrl, newRoomId, setRoomInUrl, shareLinks } from '../config.js';
+import { track } from '../analytics';
 import { useOBS } from '../context/OBSContext';
 import AICompanion from './AICompanion';
 import BackgroundPanel, { bgToStyle } from './BackgroundPanel';
@@ -366,6 +367,11 @@ const OverlayLayout = () => {
         try { await navigator.clipboard.writeText(links.obs); copied = true; } catch { /* clipboard blocked */ }
         setLiveToast({ room, ...links, fresh, copied });
         setTimeout(() => setLiveToast(null), 7000);
+
+        // The one event that separates "just looking" from "actually using it":
+        // minting a fresh room is the real activation moment; re-copying an
+        // existing room's link is a returning user, tracked separately.
+        track(fresh ? 'go_live' : 'obs_link_copied', { room });
     }, [layoutSettings, zOrder]);
 
     // ── Layouts → Scenes ─────────────────────────────────────────────────────
