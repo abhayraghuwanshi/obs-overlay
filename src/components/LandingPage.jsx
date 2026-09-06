@@ -28,11 +28,15 @@ const matchWhen = (m) => {
 const FEATURES = [
     { title: 'Drag-and-drop editor', desc: 'Place cameras, text and widgets on a live 16:9 canvas. No code, nothing to install.' },
     { title: 'OBS browser source', desc: 'One link drops the overlay straight into OBS — and your edits sync to it as you make them.' },
-    { title: 'Live World Cup scoreboard', desc: 'Search a fixture, pick it, and the score keeps itself up to date on stream.' },
+    { title: 'Live match scoreboard', desc: 'Search a fixture, pick it, and the score keeps itself up to date on stream.' },
     { title: 'Pets & mood ring', desc: 'Little mascots that roam the canvas and shift with the mood of the room.' },
     { title: 'Goals, timers & widgets', desc: 'Follower and sub goals, countdowns, a pomodoro, tickers, sticky notes, a spin wheel.' },
     { title: 'Themes & recording', desc: 'Re-skin the whole overlay in a click, and record the stream right in the browser.' },
 ];
+
+// The live-scores strip is tournament-branded (FIFA World Cup) — flip this
+// back on when the next tournament the scores feed covers is underway.
+const SHOW_LIVE_SCORES = false;
 
 // Warm near-monochrome palette — type does the work, colour is used sparingly.
 const C = {
@@ -85,7 +89,9 @@ export default function LandingPage() {
         const prev = document.body.style.overflow;
         document.body.style.overflow = 'auto';
         let alive = true;
-        fetch(scoresUrl()).then(r => r.ok ? r.json() : null).then(d => { if (alive) setMatches(d?.matches || []); }).catch(() => { if (alive) setMatches([]); });
+        if (SHOW_LIVE_SCORES) {
+            fetch(scoresUrl()).then(r => r.ok ? r.json() : null).then(d => { if (alive) setMatches(d?.matches || []); }).catch(() => { if (alive) setMatches([]); });
+        }
         fetch(`${usageUrl()}?summary=1&days=14`).then(r => r.ok ? r.json() : null).then(d => { if (alive && d) setStats(d); }).catch(() => {});
         return () => { alive = false; document.body.style.overflow = prev; };
     }, []);
@@ -139,8 +145,8 @@ export default function LandingPage() {
                 </div>
             </div>
 
-            {/* live world cup */}
-            {topMatches.length > 0 && (
+            {/* live world cup — hidden via SHOW_LIVE_SCORES, see above */}
+            {SHOW_LIVE_SCORES && topMatches.length > 0 && (
                 <div style={{ ...wrap, paddingBottom: 'clamp(48px, 8vw, 80px)' }}>
                     <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
                         <div style={kicker}>Live · FIFA World Cup</div>

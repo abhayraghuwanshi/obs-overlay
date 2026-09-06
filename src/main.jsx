@@ -1,11 +1,12 @@
 import { createRoot } from 'react-dom/client'
-import { Analytics } from '@vercel/analytics/react'
 import './index.css'
 import App from './App.jsx'
 import { getRoom, usageUrl } from './config'
+import { initAnalytics } from './analytics'
 
-// Per-room usage ping (once per page load) into our own KV — Vercel's custom
-// events are Pro-only, so we count loads + unique visitors ourselves for free.
+// Per-room usage ping (once per page load) into our own KV. This is separate
+// from GA: the home page reads these counts back to show per-room stats, which
+// GA can't serve to the client.
 // A stable per-browser id (localStorage) lets the server tally unique visitors
 // without any personal data. Fire-and-forget; never blocks the app.
 try {
@@ -19,10 +20,7 @@ try {
     }).catch(() => {})
 } catch { /* localStorage blocked / SSR — skip */ }
 
-createRoot(document.getElementById('root')).render(
-  <>
-    <App />
-    <Analytics />
-  </>
-)
+initAnalytics()
+
+createRoot(document.getElementById('root')).render(<App />)
 
